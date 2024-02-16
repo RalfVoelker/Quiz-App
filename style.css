@@ -12,13 +12,20 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(0,0,0,0.4);
+    border-top: 1px solid rgba(0,0,0,0.04);
     padding-top: 12px;
 }
  .quiz-card{
     width: 30rem;
 }
 
+.quiz-answer-card:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.05);
+}
 
+.bg-success, .bg-danger {
+    color: white!important;
+}
 
  
