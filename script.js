@@ -65,7 +65,7 @@ function showQuestion(){
 
 
 function gameIsOver() {
-    currentQuestion >= questions.length
+    return currentQuestion >= questions.length;
 }
 
 
