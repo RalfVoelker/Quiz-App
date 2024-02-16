@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz-App</title>
-    
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./img/quiz.png"
+    />
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 
@@ -20,22 +24,33 @@
         <span class="navbar-brand mb-0 h1">QuizApp</span>
       </div>
     </nav>
-
     
+
     <div class="container">
      <div class="card quiz-card" >
-      <img src="img/question-mark1.jpg" class="card-img-top">
+      <img src="img/question-mark1.jpg" id="header-image" class="card-img-top">
+
+      <div class="progress">
+        <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 0%;"></div>
+      </div>
 
     <div class="card-body" id="end-screen" style="display: none;" >
-      Quiz beendet
-    </div>
+      <div class="text-center final-headline">
+        Quiz beendet
+      </div>
 
+      <div class="text-center">
+         Du hast <b id="correct-answers"></b> Fragen von <b id="num-of-questions"></b> richtig beantwortet. 
+        </div>
+
+      <div class="button-row">
+        <button onclick="restartGame()"  type="button" class="btn btn-primary">Neues Spiel</button></div>
+    </div>
 
       <div class="card-body" id="question-body">
         <h5 class="card-title" id="question">Frage</h5>
 
         <div class="card quiz-answer-card mb-2" onclick="answer('answer_1')">
-          <!-- <div class="card quiz-answer-card mb-2" onclick="answer('answer_1')"> -->
           <div class="card-body" id="answer_1">
             Antwort1
           </div>

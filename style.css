@@ -1,6 +1,7 @@
 body{
     background-color: #007AFF!important;
 }
+
 .container{
     height: 100vh;
     background-color: #007AFF !important;
@@ -8,6 +9,7 @@ body{
     justify-content: center;
     align-items: center;
 }
+
 .question-footer{
     display: flex;
     justify-content: space-between;
@@ -15,9 +17,10 @@ body{
     border-top: 1px solid rgba(0,0,0,0.04);
     padding-top: 12px;
 }
- .quiz-card{
+
+/* .quiz-card{
     width: 30rem;
-}
+} */
 
 .quiz-answer-card:hover{
     cursor: pointer;
@@ -28,4 +31,30 @@ body{
     color: white!important;
 }
 
+.width-100{
+    width: 100%;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.final-headline{
+     font-size: 38px;
+     margin-bottom: 32px;
+}
+.button-row{
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+   
+    .quiz-card{
+        width: 100%;
+        position: relative;
+        top: 3%;
+    }
+  }
  

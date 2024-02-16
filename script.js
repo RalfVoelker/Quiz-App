@@ -43,52 +43,74 @@ let questions = [
 
 
 let currentQuestion = 0; //erste Frage
-
+let correctAnswers = 0;
+let AUDIO_SUCCESS = new Audio('audio/success.mp3');
+let AUDIO_WRONG = new Audio('audio/wrong.mp3');
 
 function init(){
     document.getElementById('number-of-questions').innerHTML = questions.length;    // Anzahl der Fragen anzeigen 
-    document.getElementById('question-number').innerHTML = currentQuestion + 1;    // Nummer der aktuellen Frage anzeigen
+    document.getElementById('question-number').innerHTML = currentQuestion ;    // Nummer der aktuellen Frage anzeigen
     showQuestion();                                                                 // Frage anzeigen
 };
 
 
 function showQuestion(){
-    if (currentQuestion >= questions.length) {
-        document.getElementById('end-screen').style = '';
-        document.getElementById('question-body').style = 'display: none';
-        // showEndScreen() ;  //TODO END-Screen
+    if (gameIsOver()) {
+        showEndScreen();
     }else{
-        let question = questions[currentQuestion];                            // Nummer der aktuellen Frage in ""question schreiben
-        document.getElementById('question').innerHTML = question['question']; // Anzeige der Frage
-        document.getElementById('answer_1').innerHTML = question['answer_1']; // Anzeige der 1. Antwort
-        document.getElementById('answer_2').innerHTML = question['answer_2']; // Anzeige der 2. Antwort
-        document.getElementById('answer_3').innerHTML = question['answer_3']; // Anzeige der 3. Antwort
-        document.getElementById('answer_4').innerHTML = question['answer_4']; // Anzeige der 4. Antwort
-        document.getElementById('question-number').innerHTML = currentQuestion + 1;
+        updateProgressBar();
+        updateToNextQuestion();
     }
 };
 
 
+function gameIsOver() {
+    currentQuestion >= questions.length
+}
+
+
 function showEndScreen(){
-    document.getElementById('question').innerHTML = 'Game over'; // Anzeige der Frage
-        document.getElementById('answer_1').innerHTML = ''; // Anzeige der 1. Antwort
-        document.getElementById('answer_2').innerHTML = ''; // Anzeige der 2. Antwort
-        document.getElementById('answer_3').innerHTML = ''; // Anzeige der 3. Antwort
-        document.getElementById('answer_4').innerHTML = ''; // Anzeige der 4. Antwort
-        
+    document.getElementById('end-screen').style = '';
+    document.getElementById('question-body').style = 'display: none';
+    document.getElementById('num-of-questions').innerHTML = questions.length;
+    document.getElementById('correct-answers').innerHTML = correctAnswers;
+    document.getElementById('progress-bar').innerHTML = `100%`;
+    document.getElementById('progress-bar').style =`width:100%;`;
+    document.getElementById('header-image').src ='img/trophy.png';
+}
+
+
+function updateProgressBar(){
+    let percent = (currentQuestion) / questions.length;
+    percent = Math.round(percent * 100);
+    document.getElementById('progress-bar').innerHTML = `${percent} %`;
+    document.getElementById('progress-bar').style =`width:${percent}%;`;
+}
+
+
+function updateToNextQuestion() { 
+    let question = questions[currentQuestion];                            // Nummer der aktuellen Frage in ""question schreiben
+    document.getElementById('question').innerHTML = question['question']; // Anzeige der Frage
+    document.getElementById('answer_1').innerHTML = question['answer_1']; // Anzeige der 1. Antwort
+    document.getElementById('answer_2').innerHTML = question['answer_2']; // Anzeige der 2. Antwort
+    document.getElementById('answer_3').innerHTML = question['answer_3']; // Anzeige der 3. Antwort
+    document.getElementById('answer_4').innerHTML = question['answer_4']; // Anzeige der 4. Antwort
+    document.getElementById('question-number').innerHTML = currentQuestion + 1;
 }
 
 
 function answer(selection){
     let question = questions[currentQuestion];                  //welche Frage...
     let selectedQuestionNumber = selection.slice(-1);           //Nummer der Frage (letztes Zeichen aus String)
-    let idOfRigthAnswer = `answer_${question['right_answer']}`; //id der richtigen Antwort
-
+    let idOfRigthAnswer = `answer_${question['right_answer']}`; //id der richtigen Antwort   
     if(selectedQuestionNumber == question['right_answer']){
         document.getElementById(selection).parentNode.classList.add('bg-success');//wenn Antwort richtig dann grün ansonsten falsche Antwort rot und Anzeige der richtigen Antwort in grün
+        AUDIO_SUCCESS.play();
+        correctAnswers++;
     }else{
         document.getElementById(selection).parentNode.classList.add('bg-danger');//mit parrentNode dem übergeordneten Element von "answer_x" die Farbe des Buttons hinzufügen
         document.getElementById(idOfRigthAnswer).parentNode.classList.add('bg-success');
+        AUDIO_WRONG.play();
     }
     document.getElementById('next-button').disabled = false; // Button auf enabled setzen
 }
@@ -103,9 +125,19 @@ function nextQuestion(){
 
 
 function resetAnswerButton(){
-    for (let i = 1; i < questions.length; i++) {
+    for (let i = 1; i < 5; i++) {
         let idOfAnswer = `answer_${i}`; //id der Antwort
         document.getElementById(idOfAnswer).parentNode.classList.remove('bg-danger');
         document.getElementById(idOfAnswer).parentNode.classList.remove('bg-success');
     }
+}
+
+
+function restartGame(){
+    document.getElementById('header-image').src ='img/question-mark1.jpg';
+    currentQuestion = 0; //erste Frage
+    correctAnswers = 0; 
+    document.getElementById('question-body').style = '';
+    document.getElementById('end-screen').style = 'display: none';
+    init();
 }
