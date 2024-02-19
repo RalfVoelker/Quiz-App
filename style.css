@@ -3,7 +3,9 @@ body{
 }
 
 .container{
-    height: 100vh;
+    /* height: 100vh; */
+    position: relative;
+    top: 5px;
     background-color: #007AFF !important;
     display: flex;
     justify-content: center;
